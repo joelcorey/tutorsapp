@@ -1,4 +1,4 @@
-const subQuestions = [
+const questions = [
     {
         question: '3 - 4',
         answers: [
@@ -221,4 +221,5 @@ const subQuestions = [
     },
 ]
 
-export default subQuestions;
+const SubQuestionsService = questions.sort(() => 0.5 - Math.random()).slice(0,10)
+export default SubQuestionsService;

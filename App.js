@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
 
@@ -7,15 +7,30 @@ import Question from './assets/components/question';
 import HorizontalLine from './assets/components/horizontalLine';
 import Answers from "./assets/components/answers";
 
-import styles from './assets/css/appStyles';
+import styles from './assets/css/app-styles';
 
-import addQuestions from './assets/services/quizAdditionService/index';
-import subQuestions from './assets/services/quizSubtractionService/index';
+import AddQuestionsService from './assets/services/add-questions-service';
+import SubQuestionsService from './assets/services/sub-questions-service';
 
 export default function App() {
+
+	const [currentQuestion, setCurrentQuestion] = useState(0);
+	const [currentAnswer, setCurrentAnswer] = useState('');
+	const question = AddQuestionsService[currentQuestion];
 	
-	const question = addQuestions[0];
-	
+	const handleClick = (e, answer) => {
+		//console.log('question.correct: ' + question.correct)
+		//console.log(answer)
+		setCurrentAnswer(answer);
+		// console.log('e: ' + e)
+
+		if (currentAnswer == question.correct) {
+			console.log('correct');
+			console.log('question.correct: ' + question.correct);
+			console.log('answer: ' + answer)
+		}
+	}
+
 	return (
 		<View style={styles.container}>
 
@@ -30,7 +45,12 @@ export default function App() {
 
 			<Question question={question.question} />
 			<HorizontalLine />
-			<Answers answers={question.answers}/>
+			<Answers 
+				answers={question.answers}
+				currentAnswer={currentAnswer}
+				correct={question.correct}
+				handleClick={handleClick}
+			/>
 		
 		
 		</View>

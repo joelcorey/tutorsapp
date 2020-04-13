@@ -29,7 +29,7 @@ const questions = [
             '37',
             '5'
             ],
-        correct: '',
+        correct: '32',
         quesionId: '0003'
     },
     {
@@ -40,7 +40,7 @@ const questions = [
             '44',
             '14'
             ],
-        correct: '',
+        correct: '14',
         quesionId: '0004'
     },
     {
@@ -221,5 +221,5 @@ const questions = [
     },
 ]
 
-const addQuestions = questions.sort(() => 0.5 - Math.random()).slice(0,10)
-export default addQuestions;
+const AddQuestionsService = questions.sort(() => 0.5 - Math.random()).slice(0,10)
+export default AddQuestionsService;
