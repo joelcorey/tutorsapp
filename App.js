@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
 
 import Progress from './assets/components/progress';
+import Menu from './assets/components/Menu';
 import Question from './assets/components/question';
 import HorizontalLine from './assets/components/horizontalLine';
 import Answers from "./assets/components/answers";
@@ -15,41 +16,75 @@ import SubQuestionsService from './assets/services/sub-questions-service';
 export default function App() {
 
 	const [currentQuestion, setCurrentQuestion] = useState(0);
-	//const [currentAnswer, setCurrentAnswer] = useState('');
 	const [currentScore, setCurrentScore] = useState(0);
-	const question = AddQuestionsService[currentQuestion];
-	
-	const handleClick = (e, answer) => {
+	const [applicationState, setApplicationState] = useState('menu');
+	const [question, setQuestion] = useState({});
+
+	const handleQuestionClick = (e, answer) => {
 		
 		if (answer == question.correct) {
 			setCurrentScore(currentScore + 1);
 		}
 
-		setCurrentQuestion(currentQuestion + 1)
+		if (currentQuestion + 1 < 10) {
+			setCurrentQuestion(currentQuestion + 1)
+		}
 		
 	}
 
-	return (
-		<View style={styles.container}>
+	const handleMenuClick = (e, selected) => {
 
-			<Image 
-				source={require('./assets/logo.png')} 
-				style={{width: 400, height: 200}}
-			/>
+		if (selected == 'Addition') {
+			console.log(selected)
+			setApplicationState('add');
+			setQuestion(AddQuestionsService[currentQuestion]);
+		}
 
-			{/* <Text>Please select a category that you want to be quizzed on below.</Text> */}
-			<View>{currentScore}</View>
-			<Progress total="10" current="3" />
-
-			<Question question={question.question} />
-			<HorizontalLine />
-			<Answers 
-				answers={question.answers}
-				// currentAnswer={currentAnswer}
-				correct={question.correct}
-				handleClick={handleClick}
-			/>
+		if (selected == 'Subtraction') {
+			setApplicationState('sub');
+			setQuestion(SubQuestionsService[currentQuestion]);			
+		}
 		
-		</View>
-	);
+	}
+
+	if (applicationState == 'menu') {
+		return (
+			<View style={styles.container}>
+				<HorizontalLine />
+				<Menu handleMenuClick={handleMenuClick} />
+			</View>
+		)
+	} 
+	else 
+	{
+		return (
+		
+			<View style={styles.container}>
+	
+				<Image 
+					source={require('./assets/logo.png')} 
+					style={{width: 400, height: 200}}
+				/>
+				{(() => {
+					if (applicationState == 'menu') {
+						console.log('hi');
+					}
+				})}
+				{/* <Text>Please select a category that you want to be quizzed on below.</Text> */}
+				<View>{currentScore}</View>
+				<Progress total="10" current={currentQuestion + 1} />
+	
+				<Question question={question.question} />
+				<HorizontalLine />
+				<Answers 
+					answers={question.answers}
+					// currentAnswer={currentAnswer}
+					correct={question.correct}
+					handleQuestionClick={handleQuestionClick}
+				/>
+			
+			</View>
+		);
+	}
+	
 }
