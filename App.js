@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
+import { Text, View, } from 'react-native';
 
 import Logo from './assets/components/logo';
 import Progress from './assets/components/progress';
@@ -50,7 +50,7 @@ export default function App() {
 
 	if (applicationState == 'menu') {
 		return (
-			
+
 			<View style={styles.container}>
 				<Logo />
 				<HorizontalLine />
