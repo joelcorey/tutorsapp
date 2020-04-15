@@ -18,7 +18,7 @@ const questions = [
             '100',
             '560'
             ],
-        correct: '',
+        correct: '300',
         quesionId: '0002'
     },
     {

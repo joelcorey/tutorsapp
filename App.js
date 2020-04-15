@@ -15,20 +15,18 @@ import SubQuestionsService from './assets/services/sub-questions-service';
 export default function App() {
 
 	const [currentQuestion, setCurrentQuestion] = useState(0);
-	const [currentAnswer, setCurrentAnswer] = useState('');
+	//const [currentAnswer, setCurrentAnswer] = useState('');
+	const [currentScore, setCurrentScore] = useState(0);
 	const question = AddQuestionsService[currentQuestion];
 	
 	const handleClick = (e, answer) => {
-		//console.log('question.correct: ' + question.correct)
-		//console.log(answer)
-		setCurrentAnswer(answer);
-		// console.log('e: ' + e)
-
-		if (currentAnswer == question.correct) {
-			console.log('correct');
-			console.log('question.correct: ' + question.correct);
-			console.log('answer: ' + answer)
+		
+		if (answer == question.correct) {
+			setCurrentScore(currentScore + 1);
 		}
+
+		setCurrentQuestion(currentQuestion + 1)
+		
 	}
 
 	return (
@@ -40,18 +38,17 @@ export default function App() {
 			/>
 
 			{/* <Text>Please select a category that you want to be quizzed on below.</Text> */}
-			
+			<View>{currentScore}</View>
 			<Progress total="10" current="3" />
 
 			<Question question={question.question} />
 			<HorizontalLine />
 			<Answers 
 				answers={question.answers}
-				currentAnswer={currentAnswer}
+				// currentAnswer={currentAnswer}
 				correct={question.correct}
 				handleClick={handleClick}
 			/>
-		
 		
 		</View>
 	);
