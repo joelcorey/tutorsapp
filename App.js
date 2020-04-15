@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
 
+import Logo from './assets/components/logo';
 import Progress from './assets/components/progress';
 import Menu from './assets/components/Menu';
 import Question from './assets/components/question';
@@ -49,8 +50,11 @@ export default function App() {
 
 	if (applicationState == 'menu') {
 		return (
+			
 			<View style={styles.container}>
+				<Logo />
 				<HorizontalLine />
+				<Text>Please select a category that you want to be quizzed on below.</Text>
 				<Menu handleMenuClick={handleMenuClick} />
 			</View>
 		)
@@ -61,19 +65,9 @@ export default function App() {
 		
 			<View style={styles.container}>
 	
-				<Image 
-					source={require('./assets/logo.png')} 
-					style={{width: 400, height: 200}}
-				/>
-				{(() => {
-					if (applicationState == 'menu') {
-						console.log('hi');
-					}
-				})}
-				{/* <Text>Please select a category that you want to be quizzed on below.</Text> */}
-				<View>{currentScore}</View>
+				<Logo />
+				{/* <View>{currentScore}</View> */}
 				<Progress total="10" current={currentQuestion + 1} />
-	
 				<Question question={question.question} />
 				<HorizontalLine />
 				<Answers 
@@ -82,8 +76,8 @@ export default function App() {
 					correct={question.correct}
 					handleQuestionClick={handleQuestionClick}
 				/>
-			
 			</View>
+
 		);
 	}
 	
